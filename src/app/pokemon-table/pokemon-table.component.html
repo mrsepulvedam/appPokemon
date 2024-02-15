@@ -1,0 +1,61 @@
+<mat-form-field>
+  <input matInput type="text" placeholder="Busca tu Pokemon" [formControl]="filterTextControl" [matAutocomplete]="auto">
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayPokemonName">
+    <mat-option *ngFor="let pokemon of filteredPokemonNames" [value]="pokemon">
+      {{ pokemon }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
+
+<div class="container">
+  <div class="table-container">
+    <mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Pokemon</mat-header-cell>
+        <mat-cell *matCellDef="let pokemon">
+          <a href="#" (click)="showPokemonDetails(pokemon.name)">{{ pokemon.name }}</a>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Resto de las columnas -->
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+  </div>
+
+  <div class="detail-container" *ngIf="selectedPokemon">
+    <h2>{{ selectedPokemon.name }}</h2>
+    <p>Altura: {{ selectedPokemon.height }}</p>
+    <p>Peso: {{ selectedPokemon.weight }}</p>
+    <p>Experiencia básica: {{ selectedPokemon.base_experience }}</p>
+    <p>Tipos: 
+      <span *ngFor="let type of selectedPokemon.types">
+        {{ type.type.name }}
+      </span>
+    </p>
+    <!-- Agrega más información aquí según sea necesario -->
+  </div>
+
+
+</div>
+<br>
+<br>
+<br>
+<h3>Resumen de Pokémones por letra del abecedario</h3>
+<table mat-table [dataSource]="alphabetSummaryDataSource">
+  <ng-container matColumnDef="letter">
+    <th mat-header-cell *matHeaderCellDef>Letra</th>
+    <td mat-cell *matCellDef="let data">{{ data.letter }}</td>
+  </ng-container>
+  <ng-container matColumnDef="count">
+    <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+    <td mat-cell *matCellDef="let data">{{ data.count }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="['letter', 'count']"></tr>
+  <tr mat-row *matRowDef="let row; columns: ['letter', 'count']"></tr>
+</table>
+

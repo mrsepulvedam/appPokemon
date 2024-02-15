@@ -1,0 +1,27 @@
+.container {
+    display: grid;
+    grid-template-columns: 1fr; /* Una columna por defecto */
+  
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(2, 1fr); /* Dos columnas en pantallas más grandes */
+    }
+  }
+  
+  .table-container, .detail-container {
+    padding: 10px;
+  }
+  
+  .table-container {
+    order: 1; /* Cambia el orden en dispositivos pequeños */
+  }
+  
+  .detail-container {
+    order: 2; /* Cambia el orden en dispositivos pequeños */
+  }
+  
+  @media (min-width: 768px) {
+    .container {
+      grid-gap: 20px; /* Espacio entre los contenedores en pantallas más grandes */
+    }
+  }
+  
